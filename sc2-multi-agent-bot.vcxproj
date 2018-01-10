@@ -123,10 +123,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
+    <ClCompile Include="SelfObservationInterface.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="SelfActionInterface.h" />
+    <ClInclude Include="SelfObservationInterface.h" />
     <ClInclude Include="UnitAgent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -24,7 +24,7 @@ Units SelfObservationInterface::GetUnits() const {
 	return this->observations->GetUnits();
 }
 
-Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter = {}) const {
+Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter) const {
 	return this->observations->GetUnits(alliance, filter);
 }
 
@@ -68,23 +68,23 @@ const Score & SelfObservationInterface::GetScore() const {
 	return this->observations->GetScore();
 }
 
-const Abilities & SelfObservationInterface::GetAbilityData(bool force_refresh = false) const {
+const Abilities & SelfObservationInterface::GetAbilityData(bool force_refresh) const {
 	return this->observations->GetAbilityData(force_refresh);
 }
 
-const UnitTypes & SelfObservationInterface::GetUnitTypeData(bool force_refresh = false) const {
+const UnitTypes & SelfObservationInterface::GetUnitTypeData(bool force_refresh) const {
 	return this->observations->GetUnitTypeData(force_refresh);
 }
 
-const Upgrades & SelfObservationInterface::GetUpgradeData(bool force_refresh = false) const {
+const Upgrades & SelfObservationInterface::GetUpgradeData(bool force_refresh) const {
 	return this->observations->GetUpgradeData(force_refresh);
 }
 
-const Buffs & SelfObservationInterface::GetBuffData(bool force_refresh = false) const {
+const Buffs & SelfObservationInterface::GetBuffData(bool force_refresh) const {
 	return this->observations->GetBuffData(force_refresh);
 }
 
-const Effects & SelfObservationInterface::GetEffectData(bool force_refresh = false) const {
+const Effects & SelfObservationInterface::GetEffectData(bool force_refresh) const {
 	return this->observations->GetEffectData(force_refresh);
 }
 
