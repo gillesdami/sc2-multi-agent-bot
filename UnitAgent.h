@@ -15,7 +15,7 @@ public:
 	virtual void OnStep() = 0;
 	virtual void OnUnitIdle() = 0;
 
-private:
+protected:
 	Unit* self;
 	SelfActionInterface* actions;
 	SelfObservationInterface* observations;
