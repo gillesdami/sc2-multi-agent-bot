@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 	Bot bot;
 	coordinator.SetParticipants({
 		CreateParticipant(Race::Terran, &bot),
-		CreateComputer(Race::Zerg)
+		CreateComputer(Race::Random)
 		});
 
 	coordinator.LaunchStarcraft();
