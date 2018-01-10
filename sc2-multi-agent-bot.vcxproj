@@ -121,12 +121,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bot.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
     <ClCompile Include="SelfObservationInterface.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bot.h" />
     <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="SelfActionInterface.h" />
     <ClInclude Include="SelfObservationInterface.h" />
