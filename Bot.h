@@ -17,6 +17,8 @@ public:
 	virtual void OnGameStart() final;
 	virtual void OnStep() final;
 	virtual void OnUnitIdle(const Unit* unit) final;
+	virtual void OnUnitCreated(const Unit* unit) final;
+	virtual void OnUnitDestroyed(const Unit* unit) final;
 private:
 	std::unique_ptr<UnitAgent>* getAgent(const Unit* unit);
 	void deleteAgent(const Unit* unit);
