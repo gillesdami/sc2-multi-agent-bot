@@ -13,6 +13,7 @@ class Bot : public Agent {
 public:
 	virtual void OnGameStart() final;
 	virtual void OnStep() final;
+	virtual void OnUnitIdle(Unit* unit) final;
 private:
 	std::unique_ptr<UnitAgent>* getAgent(Unit* unit);
 	void deleteAgent(Unit* unit);
