@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="CommandCenterAgent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
     <ClCompile Include="SelfObservationInterface.cpp" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="Bot.h" />
     <ClInclude Include="BotStrategy.h" />
+    <ClInclude Include="CommandCenterAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
     <ClInclude Include="SelfObservationInterface.h" />
     <ClInclude Include="UnitAgent.h" />
