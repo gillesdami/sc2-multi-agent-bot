@@ -10,7 +10,7 @@ class UnitAgent
 {
 public:
 	UnitAgent(Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
-	virtual ~UnitAgent();
+	virtual ~UnitAgent() = 0;
 	
 	virtual void OnStep() = 0;
 	virtual void OnUnitIdle() = 0;
