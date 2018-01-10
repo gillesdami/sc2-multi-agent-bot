@@ -2,12 +2,14 @@
 
 #include <sc2api\sc2_unit.h>
 #include "SelfActionInterface.h"
-#include "ObservationRelativeInterface.h"
+#include "SelfObservationInterface.h"
+
+using namespace sc2;
 
 class UnitAgent
 {
 public:
-	UnitAgent(Unit* self, SelfActionInterface* actions, ObservationRelativeInterface* observations);
+	UnitAgent(Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
 	virtual ~UnitAgent();
 	
 	virtual void OnStep() = 0;
@@ -16,6 +18,6 @@ public:
 private:
 	Unit* self;
 	SelfActionInterface* actions;
-	ObservationRelativeInterface* observat
+	SelfObservationInterface* observations;
 };
 
