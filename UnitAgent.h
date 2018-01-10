@@ -9,14 +9,14 @@ using namespace sc2;
 class UnitAgent
 {
 public:
-	UnitAgent(Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
+	UnitAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
 	virtual ~UnitAgent() {};
 	
 	virtual void OnStep() = 0;
 	virtual void OnUnitIdle() = 0;
 
 protected:
-	Unit* self;
+	const Unit* self;
 	SelfActionInterface* actions;
 	SelfObservationInterface* observations;
 };

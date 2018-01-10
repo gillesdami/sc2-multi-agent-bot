@@ -11,24 +11,44 @@ void Bot::OnStep()
 		it->second->get()->OnStep();
 }
 
-void Bot::OnUnitIdle(Unit* unit)
+void Bot::OnUnitIdle(const Unit* unit)
 {
 	this->getAgent(unit)->get()->OnUnitIdle();
 }
 
-std::unique_ptr<UnitAgent>* Bot::getAgent(Unit* unit)
+std::unique_ptr<UnitAgent>* Bot::getAgent(const Unit* unit)
 {
-	std::unordered_map<Unit*, std::unique_ptr<UnitAgent>*>::const_iterator it = this->agents.find(unit);
+	std::unique_ptr<UnitAgent>* agent;
+	std::unordered_map<const Unit*, std::unique_ptr<UnitAgent>*>::const_iterator it = this->agents.find(unit);
 
 	if (it == this->agents.end()) //if not found
 	{
-		//TODO
+		switch (unit->unit_type.ToType()) {
+		case UNIT_TYPEID::TERRAN_COMMANDCENTER:
+			agent = new std::unique_ptr<UnitAgent>( 
+				new CommandCenterAgent(
+					unit, 
+					new SelfActionInterface(unit, this->Actions()), 
+					new SelfObservationInterface(unit, this->Observation(), this->strategy)));
+
+			this->agents.insert(std::make_pair(unit, agent));
+			return agent;
+		default:
+			agent = new std::unique_ptr<UnitAgent>(
+				new DefaultAgent(
+					unit,
+					new SelfActionInterface(unit, this->Actions()),
+					new SelfObservationInterface(unit, this->Observation(), this->strategy)));
+
+			this->agents.insert(std::make_pair(unit, agent));
+			return agent;
+		}
 	}
 
 	return it->second;
 }
 
-void Bot::deleteAgent(Unit* unit)
+void Bot::deleteAgent(const Unit* unit)
 {
 	this->agents.erase(this->agents.find(unit));
 }

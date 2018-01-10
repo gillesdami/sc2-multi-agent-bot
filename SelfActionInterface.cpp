@@ -1,7 +1,7 @@
 #include "SelfActionInterface.h"
 
 
-SelfActionInterface::SelfActionInterface(Unit* self, ActionInterface* actions)
+SelfActionInterface::SelfActionInterface(const Unit* self, ActionInterface* actions)
 {
 	this->self = self;
 	this->actions = actions;

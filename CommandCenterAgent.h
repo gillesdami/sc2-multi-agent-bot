@@ -11,7 +11,7 @@ using namespace sc2;
 class CommandCenterAgent : public UnitAgent
 {
 public:
-	CommandCenterAgent(Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
+	CommandCenterAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
 
 	void OnStep();
 	void OnUnitIdle();

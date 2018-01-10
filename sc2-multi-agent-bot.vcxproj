@@ -123,15 +123,18 @@
   <ItemGroup>
     <ClCompile Include="Bot.cpp" />
     <ClCompile Include="CommandCenterAgent.cpp" />
+    <ClCompile Include="DefaultAgent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
     <ClCompile Include="SelfObservationInterface.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Agents.h" />
     <ClInclude Include="Bot.h" />
     <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="CommandCenterAgent.h" />
+    <ClInclude Include="DefaultAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
     <ClInclude Include="SelfObservationInterface.h" />
     <ClInclude Include="UnitAgent.h" />

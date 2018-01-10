@@ -2,10 +2,11 @@
 
 
 
-SelfObservationInterface::SelfObservationInterface(Unit* self, ObservationInterface* observations)
+SelfObservationInterface::SelfObservationInterface(const Unit* self, const ObservationInterface* observations, BotStrategy* strategy)
 {
 	this->self = self;
 	this->observations = observations;
+	this->strategy = strategy;
 }
 
 SelfObservationInterface::~SelfObservationInterface()

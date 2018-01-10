@@ -7,7 +7,7 @@ using namespace sc2;
 class SelfActionInterface
 {
 public:
-	SelfActionInterface(Unit* self, ActionInterface* actions);
+	SelfActionInterface(const Unit* self, ActionInterface* actions);
 
 	void Command(AbilityID ability, bool queued_command = false);
 	void Command(AbilityID ability, const Point2D &point, bool queued_command = false);
@@ -16,7 +16,7 @@ public:
 	~SelfActionInterface();
 
 private:
-	Unit* self;
+	const Unit* self;
 	ActionInterface* actions;
 };
 

@@ -1,6 +1,6 @@
 #include "CommandCenterAgent.h"
 
-CommandCenterAgent::CommandCenterAgent(Unit * self, SelfActionInterface * actions, SelfObservationInterface * observations) : UnitAgent(self, actions, observations)
+CommandCenterAgent::CommandCenterAgent(const Unit * self, SelfActionInterface * actions, SelfObservationInterface * observations) : UnitAgent(self, actions, observations)
 {
 }
 

@@ -8,7 +8,7 @@ using namespace sc2;
 class SelfObservationInterface
 {
 public:
-	SelfObservationInterface(Unit* self, ObservationInterface* observations);
+	SelfObservationInterface(const Unit* self,const ObservationInterface* observations, BotStrategy* strategy);
 	~SelfObservationInterface();
 
 	uint32_t GetPlayerID() const;
@@ -50,8 +50,8 @@ public:
 	float SelfObservationInterface::TerrainHeight(const Point2D &point) const;
 
 private:
-	Unit* self;
-	ObservationInterface* observations;
+	const Unit* self;
+	const ObservationInterface* observations;
 	BotStrategy* strategy;
 };
 

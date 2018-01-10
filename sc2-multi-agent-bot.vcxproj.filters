@@ -39,6 +39,9 @@
     <ClCompile Include="CommandCenterAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="DefaultAgent.cpp">
+      <Filter>Fichiers sources\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UnitAgent.h">
@@ -57,6 +60,12 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="CommandCenterAgent.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultAgent.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Agents.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
   </ItemGroup>
