@@ -1,4 +1,4 @@
 #pragma once
 
-#include "DefaultAgent.h"
 #include "CommandCenterAgent.h"
+#include "ScvAgent.h"

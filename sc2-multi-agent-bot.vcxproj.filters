@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="UnitAgent.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="SelfActionInterface.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -39,14 +36,14 @@
     <ClCompile Include="CommandCenterAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="DefaultAgent.cpp">
+    <ClCompile Include="UnitAgent.cpp">
+      <Filter>Fichiers sources\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScvAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UnitAgent.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="SelfActionInterface.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -62,10 +59,13 @@
     <ClInclude Include="CommandCenterAgent.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="DefaultAgent.h">
+    <ClInclude Include="Agents.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="Agents.h">
+    <ClInclude Include="UnitAgent.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="ScvAgent.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,8 +12,8 @@ public:
 	UnitAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
 	virtual ~UnitAgent();
 	
-	virtual void OnStep() = 0;
-	virtual void OnUnitIdle() = 0;
+	virtual void OnStep() {};
+	virtual void OnUnitIdle() {};
 
 protected:
 	const Unit* self;

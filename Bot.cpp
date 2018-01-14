@@ -24,8 +24,17 @@ void Bot::OnUnitCreated(const Unit* unit)
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+		break;
+	case UNIT_TYPEID::TERRAN_SCV:
+		this->agents.insert(std::make_pair(unit, std::make_unique<ScvAgent>(
+			unit,
+			new SelfActionInterface(unit, this->Actions()),
+			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+		break;
 	default:
-		this->agents.insert(std::make_pair(unit, std::make_unique<DefaultAgent>(
+		std::cout << "WARNING: Default agent instanciated (" << unit->unit_type.to_string() << ")" << std::endl;
+
+		this->agents.insert(std::make_pair(unit, std::make_unique<UnitAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
