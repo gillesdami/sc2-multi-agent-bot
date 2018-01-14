@@ -20,9 +20,7 @@ public:
 	virtual void OnUnitCreated(const Unit* unit) final;
 	virtual void OnUnitDestroyed(const Unit* unit) final;
 private:
-	std::unique_ptr<UnitAgent>* getAgent(const Unit* unit);
-	void deleteAgent(const Unit* unit);
-
-	std::unordered_map<const Unit*, std::unique_ptr<UnitAgent>*> agents;
+	std::unordered_map<const Unit*, std::unique_ptr<UnitAgent>> agents;
 	BotStrategy* strategy;
 };
+	

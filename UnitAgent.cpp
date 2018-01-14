@@ -1,5 +1,5 @@
 #include "UnitAgent.h"
-#include <iostream>
+
 UnitAgent::UnitAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations)
 {
 	this->self = self;
