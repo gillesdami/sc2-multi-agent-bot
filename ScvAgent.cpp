@@ -12,6 +12,7 @@ void ScvAgent::OnStep() {
 };
 
 void ScvAgent::OnUnitIdle() {
+	this->harvest();
 };
 
 ScvAgent::~ScvAgent()
@@ -20,7 +21,7 @@ ScvAgent::~ScvAgent()
 
 bool ScvAgent::shouldBuildSupplyDepot()
 {
-	return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity()
+	return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity() + 1
 		&& this->observations->GetMinerals() > 100;
 }
 
@@ -36,6 +37,34 @@ int ScvAgent::getProductionCapacity()
 void ScvAgent::buildSupplyDeppot()
 {
 	this->actions->Command(ABILITY_ID::BUILD_SUPPLYDEPOT, this->findEmptyBuildPlacement(ABILITY_ID::BUILD_SUPPLYDEPOT, this->self->pos));
+}
+
+bool ScvAgent::harvest()
+{
+	Units units = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+	for (const auto& commandCenter : units) {
+
+		if (commandCenter->ideal_harvesters - commandCenter->assigned_harvesters > 0) {
+			
+			Units units = this->observations->GetUnits(Unit::Alliance::Neutral, IsUnit(UNIT_TYPEID::NEUTRAL_MINERALFIELD));
+			float distance = std::numeric_limits<float>::max();
+			const Unit* mineral_target = nullptr;
+
+			for (const auto& mineralPatch : units) {
+
+				float d = DistanceSquared2D(mineralPatch->pos, commandCenter->pos);
+				if (d < distance) {
+					distance = d;
+					mineral_target = mineralPatch;
+				}
+			}
+
+			this->actions->Command(ABILITY_ID::SMART, mineral_target);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 Point2D ScvAgent::findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, double increment)

@@ -19,6 +19,7 @@ private:
 	bool shouldBuildSupplyDepot();
 	int getProductionCapacity();
 	void buildSupplyDeppot();
+	bool harvest();
 	int countBuildOrders(ABILITY_ID abilityId);
 	Point2D findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, double increment = 0);
 };
