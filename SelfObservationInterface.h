@@ -49,9 +49,9 @@ public:
 	bool SelfObservationInterface::IsPlacable(const Point2D &point) const;
 	float SelfObservationInterface::TerrainHeight(const Point2D &point) const;
 
+	BotStrategy* strategy;
 private:
 	const Unit* self;
 	const ObservationInterface* observations;
-	BotStrategy* strategy;
 };
 

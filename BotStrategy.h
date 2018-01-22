@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sc2api\sc2_common.h>
+#include <iostream>
 
 using namespace sc2;
 
