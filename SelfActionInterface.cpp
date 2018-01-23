@@ -22,6 +22,11 @@ void SelfActionInterface::Command(AbilityID ability, const Unit * target, bool q
 	this->actions->UnitCommand(this->self, ability, target, queued_command);
 }
 
+void SelfActionInterface::SendActions()
+{
+	this->actions->SendActions();
+}
+
 SelfActionInterface::~SelfActionInterface()
 {
 }

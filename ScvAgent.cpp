@@ -8,7 +8,12 @@ ScvAgent::ScvAgent(const Unit* self, SelfActionInterface* actions, SelfObservati
 }
 
 void ScvAgent::OnStep() {
-	if (shouldBuildSupplyDepot()) buildSupplyDeppot();
+	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) {
+		build(ABILITY_ID::BUILD_SUPPLYDEPOT);
+
+		if(shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) std::cout << "bug" << std::endl;
+	}
+	else if (shouldBuild(ABILITY_ID::BUILD_BARRACKS)) build(ABILITY_ID::BUILD_BARRACKS);
 };
 
 void ScvAgent::OnUnitIdle() {
@@ -19,13 +24,27 @@ ScvAgent::~ScvAgent()
 {
 }
 
-bool ScvAgent::shouldBuildSupplyDepot()
+bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 {
-	return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity() + 1
-		&& this->observations->GetMinerals() > 100;
+	switch (abilityId)
+	{
+	case ABILITY_ID::BUILD_SUPPLYDEPOT:
+		return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity() + 1
+				&& this->observations->GetMinerals() > 100;
+	case ABILITY_ID::BUILD_BARRACKS:
+		return this->observations->GetMinerals() > 150 &&
+			this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKS)).size()
+			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSFLYING)).size()
+			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSREACTOR)).size()
+			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSTECHLAB)).size()
+			+ this->countBuildOrders(ABILITY_ID::BUILD_BARRACKS)
+			< this->observations->GetFoodWorkers() / 15;
+	default:
+		return false;
+	}
 }
 
-int ScvAgent::getProductionCapacity()
+size_t ScvAgent::getProductionCapacity()
 {
 	//TODO loop optim
 	return this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKS)).size()
@@ -34,9 +53,10 @@ int ScvAgent::getProductionCapacity()
 		+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORT)).size()*2;
 }
 
-void ScvAgent::buildSupplyDeppot()
+void ScvAgent::build(ABILITY_ID abilityId)
 {
-	this->actions->Command(ABILITY_ID::BUILD_SUPPLYDEPOT, this->findEmptyBuildPlacement(ABILITY_ID::BUILD_SUPPLYDEPOT, this->self->pos));
+	this->actions->Command(abilityId, this->findEmptyBuildPlacement(abilityId, this->self->pos));
+	this->observations->strategy->publicOrdersThisStep.push_back(abilityId);
 }
 
 bool ScvAgent::harvest()
@@ -67,14 +87,30 @@ bool ScvAgent::harvest()
 	return false;
 }
 
-Point2D ScvAgent::findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, double increment)
+Point2D ScvAgent::findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, float increment)
 {
-	if (increment >= 99) return closestTo;
-
-	if (this->query->Placement(abilityId, closestTo))
+	//abord
+	if (increment >= 99) {
+		std::cout << "Fail to find" << std::endl;
 		return closestTo;
-	else
-		return this->findEmptyBuildPlacement(abilityId, Point2D(closestTo.x+cos(increment)*increment*increment, closestTo.y+sin(increment)*increment*increment), increment + 0.1);
+	}
+
+	//free placement
+	if (this->query->Placement(abilityId, closestTo)) {
+		//not building too close from the nexus
+		Units units = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+		bool valid = true;
+		for (const auto& unit : units) {
+			// 25 = (2nexus_radius)²
+			if (DistanceSquared2D(unit->pos, closestTo) < 40) valid = false;
+		}
+		
+		if (valid) {
+			return closestTo;
+		}
+	}
+	
+	return this->findEmptyBuildPlacement(abilityId, Point2D(closestTo.x+cos(increment)*increment, closestTo.y+sin(increment)*increment), increment + 0.1234f);
 }
 
 int ScvAgent::countBuildOrders(ABILITY_ID abilityId)
@@ -88,6 +124,10 @@ int ScvAgent::countBuildOrders(ABILITY_ID abilityId)
 				count++;
 			}
 		}
+	}
+
+	for (const auto& ability : this->observations->strategy->publicOrdersThisStep) {
+		if (ability == abilityId) count++;
 	}
 
 	return count;
