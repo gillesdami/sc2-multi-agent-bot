@@ -45,6 +45,9 @@
     <ClCompile Include="SupplydepotAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="BarrackAgent.cpp">
+      <Filter>Fichiers sources\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SelfActionInterface.h">
@@ -72,6 +75,9 @@
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
     <ClInclude Include="SupplydepotAgent.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="BarrackAgent.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
   </ItemGroup>
