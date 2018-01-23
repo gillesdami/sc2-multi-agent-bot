@@ -6,11 +6,16 @@ CommandCenterAgent::CommandCenterAgent(const Unit * self, SelfActionInterface * 
 
 void CommandCenterAgent::OnStep()
 {
+	if (this->self->orders.empty()
+		&& this->observations->GetMinerals() > 50
+		&& this->self->ideal_harvesters - this->self->assigned_harvesters > 0) {
+
+		this->actions->Command(ABILITY_ID::TRAIN_SCV);
+	}
 }
 
 void CommandCenterAgent::OnUnitIdle()
 {
-	this->actions->Command(ABILITY_ID::TRAIN_SCV);
 }
 
 CommandCenterAgent::~CommandCenterAgent()
