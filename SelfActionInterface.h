@@ -12,6 +12,7 @@ public:
 	void Command(AbilityID ability, bool queued_command = false);
 	void Command(AbilityID ability, const Point2D &point, bool queued_command = false);
 	void Command(AbilityID ability, const Unit *target, bool queued_command = false);
+	void SendActions();
 
 	~SelfActionInterface();
 

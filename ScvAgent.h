@@ -16,11 +16,14 @@ public:
 
 	~ScvAgent();
 private:
-	bool shouldBuildSupplyDepot();
-	int getProductionCapacity();
-	void buildSupplyDeppot();
+	bool shouldBuild(ABILITY_ID abilityId);
+	void build(ABILITY_ID abilityId);
+
+
+	size_t getProductionCapacity();
+	
 	bool harvest();
 	int countBuildOrders(ABILITY_ID abilityId);
-	Point2D findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, double increment = 0);
+	Point2D findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, float increment = 0);
 };
 

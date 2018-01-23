@@ -6,14 +6,10 @@
 using namespace sc2;
 
 struct BotStrategy {
-	double aggressivity;
-	double developpement;
-
 	int enemyMilitarySupply;
 
-	int mineralsAllocated;
-	int vespeneAllocated;
+	std::vector<ABILITY_ID> publicOrdersThisStep;
 
-	Point2D** militarySupportRequested;
-	Point2D** militaryObjectives;
+	std::vector<Point2D> militarySupportRequested;
+	std::vector<Point2D> militaryObjectives;
 };

@@ -3,12 +3,16 @@
 void Bot::OnGameStart() 
 {
 	std::cout << "Hello, World!" << std::endl;
+	this->strategy = new BotStrategy();
 }
 
 void Bot::OnStep() 
 {
-	for (auto it = this->agents.begin(); it != this->agents.end(); ++it)
+	this->strategy->publicOrdersThisStep.clear();
+
+	for (auto it = this->agents.begin(); it != this->agents.end(); ++it) {
 		it->second.get()->OnStep();
+	}
 }
 
 void Bot::OnUnitIdle(const Unit* unit)

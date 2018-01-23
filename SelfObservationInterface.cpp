@@ -160,3 +160,4 @@ bool SelfObservationInterface::IsPlacable(const Point2D &point) const {
 float SelfObservationInterface::TerrainHeight(const Point2D &point) const {
 	return this->observations->TerrainHeight(point);
 }
+
