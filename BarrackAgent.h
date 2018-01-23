@@ -8,6 +8,9 @@
 
 class BarrackAgent : public UnitAgent
 {
+private:
+	bool isIdle;
+
 public:
 	BarrackAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations);
 

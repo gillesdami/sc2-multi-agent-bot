@@ -11,10 +11,13 @@ BarrackAgent::~BarrackAgent()
 
 void BarrackAgent::OnStep() 
 {
-
+	if (isIdle && this->observations->GetMinerals()>100) {
+		isIdle = false;
+		this->actions->Command(ABILITY_ID::TRAIN_MARINE);
+	}
 }
 
 void BarrackAgent::OnUnitIdle()
 {
-	this->actions->Command(ABILITY_ID::TRAIN_MARINE);
+	isIdle = true;
 }
