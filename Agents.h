@@ -4,3 +4,4 @@
 #include "ScvAgent.h"
 #include "SupplydepotAgent.h"
 #include "BarrackAgent.h"
+#include "MilitaryAgent.h"

@@ -48,6 +48,12 @@ void Bot::OnUnitCreated(const Unit* unit)
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+	case UNIT_TYPEID::TERRAN_MARINE:
+		this->agents.insert(std::make_pair(unit, std::make_unique<MilitaryAgent>(
+			unit,
+			new SelfActionInterface(unit, this->Actions()),
+			new SelfObservationInterface(unit, this->Observation(), this->strategy),
+			this->Query())));
 	default:
 		std::cout << "WARNING: Default agent instanciated (" << unit->unit_type.to_string() << ")" << std::endl;
 

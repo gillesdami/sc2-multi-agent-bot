@@ -125,6 +125,7 @@
     <ClCompile Include="Bot.cpp" />
     <ClCompile Include="CommandCenterAgent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MilitaryAgent.cpp" />
     <ClCompile Include="ScvAgent.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
     <ClCompile Include="SelfObservationInterface.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Bot.h" />
     <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="CommandCenterAgent.h" />
+    <ClInclude Include="MilitaryAgent.h" />
     <ClInclude Include="ScvAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
     <ClInclude Include="SelfObservationInterface.h" />
