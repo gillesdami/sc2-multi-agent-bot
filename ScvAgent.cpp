@@ -34,7 +34,7 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 				&& this->observations->GetMinerals() > 100;
 	case ABILITY_ID::BUILD_REFINERY:
 		return this->observations->GetMinerals() > 75
-			&& this->countBuildOrders(ABILITY_ID::BUILD_REFINERY) + this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY)).size() < this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() / 11
+			&& this->countBuildOrders(ABILITY_ID::BUILD_REFINERY) + this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY)).size() < this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() / 9
 			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() > 15
 			&& this->findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
@@ -44,7 +44,10 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSREACTOR)).size()
 			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSTECHLAB)).size()
 			+ this->countBuildOrders(ABILITY_ID::BUILD_BARRACKS)
-			< this->observations->GetFoodWorkers() / 15;
+			< this->observations->GetFoodWorkers() / 9
+			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() > 16
+			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOT)).size()
+			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED)).size() > 0;
 	default:
 		return false;
 	}
