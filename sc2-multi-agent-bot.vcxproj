@@ -85,12 +85,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>H:\Documents\Visual Studio 2017\Projects\s2client-api\build\generated;H:\Documents\Visual Studio 2017\Projects\s2client-api\contrib\civetweb\include;H:\Documents\Visual Studio 2017\Projects\s2client-api\contrib\protobuf\src;H:\Documents\Visual Studio 2017\Projects\s2client-api\contrib\SDL-mirror\include;H:\Documents\Visual Studio 2017\Projects\s2client-api\examples\common;H:\Documents\Visual Studio 2017\Projects\s2client-api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\build\generated;C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\contrib\civetweb\include;C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\contrib\protobuf\src;C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\contrib\SDL-mirror\include;C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\examples\common;C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_SCL_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>H:\Documents\Visual Studio 2017\Projects\s2client-api\build\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\damien\Documents\Visual Studio 2017\Projects\s2client-api\build\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sc2apid.lib;sc2utilsd.lib;sc2protocold.lib;libprotobufd.lib;civetweb.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

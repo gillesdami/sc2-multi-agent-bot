@@ -4,4 +4,3 @@
 #include "ScvAgent.h"
 #include "SupplydepotAgent.h"
 #include "BarrackAgent.h"
->>>>>>> Stashed changes

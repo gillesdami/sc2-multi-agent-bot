@@ -5,18 +5,19 @@
 ScvAgent::ScvAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations, QueryInterface* query) : UnitAgent(self, actions, observations)
 {
 	this->query = query;
+	this->isBusy = false;
 }
 
 void ScvAgent::OnStep() {
-	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) {
-		build(ABILITY_ID::BUILD_SUPPLYDEPOT);
+	if (this->isBusy) return;
 
-		if(shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) std::cout << "bug" << std::endl;
-	}
+	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) build(ABILITY_ID::BUILD_SUPPLYDEPOT);
+	else if (shouldBuild(ABILITY_ID::BUILD_REFINERY)) build(ABILITY_ID::BUILD_REFINERY, this->findAvailableGeyser());
 	else if (shouldBuild(ABILITY_ID::BUILD_BARRACKS)) build(ABILITY_ID::BUILD_BARRACKS);
 };
 
 void ScvAgent::OnUnitIdle() {
+	this->isBusy = false;
 	this->harvest();
 };
 
@@ -31,6 +32,11 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 	case ABILITY_ID::BUILD_SUPPLYDEPOT:
 		return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity() + 1
 				&& this->observations->GetMinerals() > 100;
+	case ABILITY_ID::BUILD_REFINERY:
+		return this->observations->GetMinerals() > 75
+			&& this->countBuildOrders(ABILITY_ID::BUILD_REFINERY) + this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY)).size() < this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() / 11
+			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() > 15
+			&& this->findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
 		return this->observations->GetMinerals() > 150 &&
 			this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKS)).size()
@@ -53,10 +59,39 @@ size_t ScvAgent::getProductionCapacity()
 		+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORT)).size()*2;
 }
 
-void ScvAgent::build(ABILITY_ID abilityId)
+void ScvAgent::build(ABILITY_ID abilityId, Tag target)
 {
-	this->actions->Command(abilityId, this->findEmptyBuildPlacement(abilityId, this->self->pos));
+	if (target != NULL) {
+		this->actions->Command(abilityId, this->observations->GetUnit(target));
+	}
+	else {
+		this->actions->Command(abilityId, this->findEmptyBuildPlacement(abilityId, this->self->pos));
+	}
 	this->observations->strategy->publicOrdersThisStep.push_back(abilityId);
+	this->isBusy = true;
+}
+
+Tag ScvAgent::findAvailableGeyser()
+{
+	Tag closestGeyser = NULL;
+	Units geysers = this->observations->GetUnits(Unit::Alliance::Neutral, IsVespeneGeyser());
+	Units commandcenters = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+	
+	float max_distance = 15.0f;//must be close from a base
+
+	for (const auto& geyser : geysers) {
+		for (const auto& commandcenter : commandcenters) {
+			float current_distance = Distance2D(commandcenter->pos, geyser->pos);
+
+			if (current_distance < max_distance && query->Placement(ABILITY_ID::BUILD_REFINERY, geyser->pos)) {
+				max_distance = current_distance;
+				closestGeyser = geyser->tag;
+				std::cout << "geyser found" << std::endl;
+			}
+		}
+	}
+
+	return closestGeyser;
 }
 
 bool ScvAgent::harvest()
