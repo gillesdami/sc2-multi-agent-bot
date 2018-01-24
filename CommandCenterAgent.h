@@ -17,5 +17,8 @@ public:
 	void OnUnitIdle();
 
 	~CommandCenterAgent();
+
+private:
+	bool refineryRequireWorkers();
 };
 
