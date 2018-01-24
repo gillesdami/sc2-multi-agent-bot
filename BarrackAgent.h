@@ -16,6 +16,8 @@ public:
 
 	void OnStep();
 	void OnUnitIdle();
+	void trainAgent();
+	void train(ABILITY_ID abilityId);
 
 	~BarrackAgent();
 };
