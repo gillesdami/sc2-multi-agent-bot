@@ -96,16 +96,36 @@ Tag ScvAgent::findAvailableGeyser()
 
 bool ScvAgent::harvest()
 {
-	Units units = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
-	for (const auto& commandCenter : units) {
+	//try harvest vespene
+	Units refineries = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY));
+	float distanceMax = std::numeric_limits<float>::max();
+	const Unit* refinery_target = nullptr;
+	for (const auto& refinery : refineries) {
+		if (refinery->ideal_harvesters - refinery->assigned_harvesters > 0) {
+			float d = DistanceSquared2D(refinery->pos, this->self->pos);
 
+			if (d < distanceMax) {
+				distanceMax = d;
+				refinery_target = refinery;
+			}
+		}
+	}
+
+	if (refinery_target != nullptr) {
+		this->actions->Command(ABILITY_ID::SMART, refinery_target);
+		return true;
+	}
+
+	//try harvest mineral
+	Units commandCenters = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+	for (const auto& commandCenter : commandCenters) {
 		if (commandCenter->ideal_harvesters - commandCenter->assigned_harvesters > 0) {
 			
-			Units units = this->observations->GetUnits(Unit::Alliance::Neutral, IsUnit(UNIT_TYPEID::NEUTRAL_MINERALFIELD));
+			Units mineralPatchs = this->observations->GetUnits(Unit::Alliance::Neutral, IsUnit(UNIT_TYPEID::NEUTRAL_MINERALFIELD));
 			float distance = std::numeric_limits<float>::max();
 			const Unit* mineral_target = nullptr;
 
-			for (const auto& mineralPatch : units) {
+			for (const auto& mineralPatch : mineralPatchs) {
 
 				float d = DistanceSquared2D(mineralPatch->pos, commandCenter->pos);
 				if (d < distance) {
