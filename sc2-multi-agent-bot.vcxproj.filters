@@ -48,6 +48,9 @@
     <ClCompile Include="BarrackAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SelfActionInterface.h">
@@ -78,6 +81,9 @@
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
     <ClInclude Include="BarrackAgent.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
     </ClInclude>
   </ItemGroup>

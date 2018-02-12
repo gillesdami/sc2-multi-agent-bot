@@ -2,6 +2,7 @@
 
 #include "cmath"
 #include "UnitAgent.h"
+#include "util.h"
 
 class ScvAgent :
 	public UnitAgent
@@ -26,17 +27,6 @@ private:
 	size_t getProductionCapacity();
 	
 	bool harvest();
-	int countBuildOrders(ABILITY_ID abilityId);
-	Point2D findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, float increment = 0);
+	Point2D findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo);
 };
 
-struct IsVespeneGeyser {
-	bool operator()(const Unit& unit) {
-		switch (unit.unit_type.ToType()) {
-		case UNIT_TYPEID::NEUTRAL_VESPENEGEYSER: return true;
-		case UNIT_TYPEID::NEUTRAL_SPACEPLATFORMGEYSER: return true;
-		case UNIT_TYPEID::NEUTRAL_PROTOSSVESPENEGEYSER: return true;
-		default: return false;
-		}
-	}
-};

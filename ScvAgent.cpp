@@ -9,16 +9,16 @@ ScvAgent::ScvAgent(const Unit* self, SelfActionInterface* actions, SelfObservati
 }
 
 void ScvAgent::OnStep() {
-	if (this->isBusy) return;
+	if (isBusy) return;
 
 	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) build(ABILITY_ID::BUILD_SUPPLYDEPOT);
-	else if (shouldBuild(ABILITY_ID::BUILD_REFINERY)) build(ABILITY_ID::BUILD_REFINERY, this->findAvailableGeyser());
+	else if (shouldBuild(ABILITY_ID::BUILD_REFINERY)) build(ABILITY_ID::BUILD_REFINERY, findAvailableGeyser());
 	else if (shouldBuild(ABILITY_ID::BUILD_BARRACKS)) build(ABILITY_ID::BUILD_BARRACKS);
 };
 
 void ScvAgent::OnUnitIdle() {
-	this->isBusy = false;
-	this->harvest();
+	isBusy = false;
+	harvest();
 };
 
 ScvAgent::~ScvAgent()
@@ -30,24 +30,18 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 	switch (abilityId)
 	{
 	case ABILITY_ID::BUILD_SUPPLYDEPOT:
-		return this->observations->GetFoodCap() + this->countBuildOrders(ABILITY_ID::BUILD_SUPPLYDEPOT)*10  < this->observations->GetFoodUsed() + this->getProductionCapacity() + 1
-				&& this->observations->GetMinerals() > 100;
+		return observations->GetFoodCap() + h->CountSelfOrdersType(ABILITY_ID::BUILD_SUPPLYDEPOT)*10 < observations->GetFoodUsed() + getProductionCapacity() + 1
+			&& observations->helper->HasResourcesToBuild(UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
 	case ABILITY_ID::BUILD_REFINERY:
-		return this->observations->GetMinerals() > 75
-			&& this->countBuildOrders(ABILITY_ID::BUILD_REFINERY) + this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY)).size() < this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() / 9
-			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() > 15
-			&& this->findAvailableGeyser() != NULL;
+		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_REFINERY)
+			&& h->CountSelfOrdersType(ABILITY_ID::BUILD_REFINERY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / 9
+			&& h->GetSelfUnits(AGENT_TYPE::TERRAN_SCV).size() > 15
+			&& findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
-		return this->observations->GetMinerals() > 150 &&
-			this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKS)).size()
-			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSFLYING)).size()
-			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSREACTOR)).size()
-			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKSTECHLAB)).size()
-			+ this->countBuildOrders(ABILITY_ID::BUILD_BARRACKS)
-			< this->observations->GetFoodWorkers() / 9
-			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV)).size() > 16
-			&& this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOT)).size()
-			+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED)).size() > 0;
+		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_BARRACKS)
+			&& h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_BARRACKS).size() + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 9
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 16
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_SUPPLYDEPOT) > 0;
 	default:
 		return false;
 	}
@@ -56,29 +50,29 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 size_t ScvAgent::getProductionCapacity()
 {
 	//TODO loop optim
-	return this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_BARRACKS)).size()
-		+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER)).size()
-		+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_FACTORY)).size()*2
-		+ this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_STARPORT)).size()*2;
+	return h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_BARRACKS)
+		+ h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_TOWN_HALL)
+		+ h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_FACTORY)
+		+ h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_STARPORT);
 }
 
 void ScvAgent::build(ABILITY_ID abilityId, Tag target)
 {
 	if (target != NULL) {
-		this->actions->Command(abilityId, this->observations->GetUnit(target));
+		actions->Command(abilityId, observations->GetUnit(target));
 	}
 	else {
-		this->actions->Command(abilityId, this->findEmptyBuildPlacement(abilityId, this->self->pos));
+		actions->Command(abilityId, findEmptyBuildPlacement(abilityId, self->pos));
 	}
-	this->observations->strategy->publicOrdersThisStep.push_back(abilityId);
-	this->isBusy = true;
+	observations->strategy->publicOrdersThisStep.push_back(abilityId);
+	isBusy = true;
 }
 
 Tag ScvAgent::findAvailableGeyser()
 {
 	Tag closestGeyser = NULL;
-	Units geysers = this->observations->GetUnits(Unit::Alliance::Neutral, IsVespeneGeyser());
-	Units commandcenters = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+	Units geysers = h->GetUnits(Unit::Alliance::Neutral, AGENT_TYPE::NEUTRAL_ANY_VESPENE);
+	Units commandcenters = h->GetUnits(Unit::Alliance::Self, AGENT_TYPE::TERRAN_ANY_TOWN_HALL);
 	
 	float max_distance = 15.0f;//must be close from a base
 
@@ -89,7 +83,6 @@ Tag ScvAgent::findAvailableGeyser()
 			if (current_distance < max_distance && query->Placement(ABILITY_ID::BUILD_REFINERY, geyser->pos)) {
 				max_distance = current_distance;
 				closestGeyser = geyser->tag;
-				std::cout << "geyser found" << std::endl;
 			}
 		}
 	}
@@ -100,12 +93,12 @@ Tag ScvAgent::findAvailableGeyser()
 bool ScvAgent::harvest()
 {
 	//try harvest vespene
-	Units refineries = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_REFINERY));
+	Units refineries = h->GetUnits(Unit::Alliance::Self, AGENT_TYPE::TERRAN_REFINERY);
 	float distanceMax = std::numeric_limits<float>::max();
 	const Unit* refinery_target = nullptr;
 	for (const auto& refinery : refineries) {
 		if (refinery->ideal_harvesters - refinery->assigned_harvesters > 0) {
-			float d = DistanceSquared2D(refinery->pos, this->self->pos);
+			float d = DistanceSquared2D(refinery->pos, self->pos);
 
 			if (d < distanceMax) {
 				distanceMax = d;
@@ -115,16 +108,16 @@ bool ScvAgent::harvest()
 	}
 
 	if (refinery_target != nullptr) {
-		this->actions->Command(ABILITY_ID::SMART, refinery_target);
+		actions->Command(ABILITY_ID::SMART, refinery_target);
 		return true;
 	}
 
 	//try harvest mineral
-	Units commandCenters = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
+	Units commandCenters = h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_TOWN_HALL);
 	for (const auto& commandCenter : commandCenters) {
 		if (commandCenter->ideal_harvesters - commandCenter->assigned_harvesters > 0) {
 			
-			Units mineralPatchs = this->observations->GetUnits(Unit::Alliance::Neutral, IsUnit(UNIT_TYPEID::NEUTRAL_MINERALFIELD));
+			Units mineralPatchs = h->GetUnits(Unit::Alliance::Neutral, AGENT_TYPE::NEUTRAL_MINERALFIELD);
 			float distance = std::numeric_limits<float>::max();
 			const Unit* mineral_target = nullptr;
 
@@ -137,7 +130,7 @@ bool ScvAgent::harvest()
 				}
 			}
 
-			this->actions->Command(ABILITY_ID::SMART, mineral_target);
+			actions->Command(ABILITY_ID::SMART, mineral_target);
 			return true;
 		}
 	}
@@ -145,48 +138,21 @@ bool ScvAgent::harvest()
 	return false;
 }
 
-Point2D ScvAgent::findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo, float increment)
+Point2D ScvAgent::findEmptyBuildPlacement(ABILITY_ID abilityId, Point2D closestTo)
 {
-	//abord
-	if (increment >= 99) {
-		std::cout << "Fail to find" << std::endl;
-		return closestTo;
-	}
+	float theta = 1, r = 5;
+	Point2D pos;
 
-	//free placement
-	if (this->query->Placement(abilityId, closestTo)) {
-		//not building too close from the nexus
-		Units units = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_COMMANDCENTER));
-		bool valid = true;
-		for (const auto& unit : units) {
-			// 25 = (2nexus_radius)²
-			if (DistanceSquared2D(unit->pos, closestTo) < 40) valid = false;
+	for (int p = 0; p < 99; p++) {
+		pos = Point2D(r * cos(theta) + closestTo.x, r * sin(theta) + closestTo.y);
+
+		if (query->Placement(abilityId, pos)) {
+			return pos;
 		}
-		
-		if (valid) {
-			return closestTo;
-		}
-	}
-	
-	return this->findEmptyBuildPlacement(abilityId, Point2D(closestTo.x+cos(increment)*increment, closestTo.y+sin(increment)*increment), increment + 0.1234f);
-}
 
-int ScvAgent::countBuildOrders(ABILITY_ID abilityId)
-{
-	int count = 0;
-
-	Units units = this->observations->GetUnits(Unit::Alliance::Self, IsUnit(UNIT_TYPEID::TERRAN_SCV));
-	for (const auto& unit : units) {
-		for (const auto& order : unit->orders) {
-			if (order.ability_id == abilityId) {
-				count++;
-			}
-		}
+		r++;
+		theta++;
 	}
 
-	for (const auto& ability : this->observations->strategy->publicOrdersThisStep) {
-		if (ability == abilityId) count++;
-	}
-
-	return count;
+	return pos;
 }
