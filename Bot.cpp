@@ -4,6 +4,7 @@ void Bot::OnGameStart()
 {
 	std::cout << "Hello, World!" << std::endl;
 	this->strategy = new BotStrategy();
+	this->strategy->expansionLocations = search::CalculateExpansionLocations(Observation(), Query());
 }
 
 void Bot::OnStep() 

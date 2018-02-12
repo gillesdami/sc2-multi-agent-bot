@@ -12,4 +12,6 @@ struct BotStrategy {
 
 	std::vector<Point2D> militarySupportRequested;
 	std::vector<Point2D> militaryObjectives;
+
+	std::vector<Point3D> expansionLocations;
 };

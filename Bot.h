@@ -1,6 +1,8 @@
 #pragma once
 
 #include <sc2api/sc2_api.h>
+#include <sc2lib/sc2_search.h>
+
 #include <iostream>
 #include <memory>
 

@@ -14,6 +14,7 @@ void ScvAgent::OnStep() {
 	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) build(ABILITY_ID::BUILD_SUPPLYDEPOT);
 	else if (shouldBuild(ABILITY_ID::BUILD_REFINERY)) build(ABILITY_ID::BUILD_REFINERY, findAvailableGeyser());
 	else if (shouldBuild(ABILITY_ID::BUILD_BARRACKS)) build(ABILITY_ID::BUILD_BARRACKS);
+	else if (shouldBuild(ABILITY_ID::BUILD_COMMANDCENTER)) build(ABILITY_ID::BUILD_COMMANDCENTER);
 };
 
 void ScvAgent::OnUnitIdle() {
@@ -42,6 +43,9 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 			&& h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_BARRACKS).size() + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 9
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 16
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_SUPPLYDEPOT) > 0;
+	case ABILITY_ID::BUILD_COMMANDCENTER:
+		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_COMMANDCENTER)
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / (h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_TOWN_HALL) + h->CountSelfOrdersType(ABILITY_ID::BUILD_COMMANDCENTER)) >= 16;
 	default:
 		return false;
 	}
@@ -60,6 +64,20 @@ void ScvAgent::build(ABILITY_ID abilityId, Tag target)
 {
 	if (target != NULL) {
 		actions->Command(abilityId, observations->GetUnit(target));
+	}
+	else if (abilityId == ABILITY_ID::BUILD_COMMANDCENTER) {
+		float minimum_distance = std::numeric_limits<float>::max();
+		Point3D closest_expansion;
+		for (const auto& expansion : observations->strategy->expansionLocations) {
+			float current_distance = Distance2D(self->pos, expansion);
+
+			if (current_distance < minimum_distance && query->Placement(abilityId, expansion)) {
+				closest_expansion = expansion;
+				minimum_distance = current_distance;
+			}
+		}
+
+		actions->Command(abilityId, closest_expansion);
 	}
 	else {
 		actions->Command(abilityId, findEmptyBuildPlacement(abilityId, self->pos));

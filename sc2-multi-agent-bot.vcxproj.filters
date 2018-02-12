@@ -1,96 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Agents">
-      <UniqueIdentifier>{4d86ab99-36ef-4f59-a0c1-a63f0e884f97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Agents">
-      <UniqueIdentifier>{75e16ba4-0762-4335-a4ea-f30a5f308d8e}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SelfActionInterface.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="SelfObservationInterface.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Bot.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SelfActionInterface.cpp" />
+    <ClCompile Include="SelfObservationInterface.cpp" />
+    <ClCompile Include="util.cpp" />
+    <ClCompile Include="BarrackAgent.cpp">
+      <Filter>Agents</Filter>
     </ClCompile>
     <ClCompile Include="CommandCenterAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="UnitAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="ScvAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="SupplydepotAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="BarrackAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
+      <Filter>Agents</Filter>
     </ClCompile>
     <ClCompile Include="MilitaryAgent.cpp">
-      <Filter>Fichiers sources\Agents</Filter>
+      <Filter>Agents</Filter>
     </ClCompile>
-    <ClCompile Include="util.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="ScvAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplydepotAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitAgent.cpp">
+      <Filter>Agents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SelfActionInterface.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="BotStrategy.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="SelfObservationInterface.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Bot.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandCenterAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClInclude>
+    <ClInclude Include="Bot.h" />
+    <ClInclude Include="BotStrategy.h" />
+    <ClInclude Include="SelfActionInterface.h" />
+    <ClInclude Include="SelfObservationInterface.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="Agents.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="ScvAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="SupplydepotAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
+      <Filter>Agents</Filter>
     </ClInclude>
     <ClInclude Include="BarrackAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandCenterAgent.h">
+      <Filter>Agents</Filter>
     </ClInclude>
     <ClInclude Include="MilitaryAgent.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClCompile>
-    <ClInclude Include="util.h">
-      <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClCompile>
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="ScvAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplydepotAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Agents">
+      <UniqueIdentifier>{6e898760-24a0-47a2-a7bb-2412c785a617}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
