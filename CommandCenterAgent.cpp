@@ -2,6 +2,7 @@
 
 CommandCenterAgent::CommandCenterAgent(const Unit * self, SelfActionInterface * actions, SelfObservationInterface * observations) : UnitAgent(self, actions, observations)
 {
+	actions->Command(ABILITY_ID::SMART, self->pos);
 }
 
 void CommandCenterAgent::OnStep()
