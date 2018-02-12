@@ -14,6 +14,8 @@ void ScvAgent::OnStep() {
 	if (shouldBuild(ABILITY_ID::BUILD_SUPPLYDEPOT)) build(ABILITY_ID::BUILD_SUPPLYDEPOT);
 	else if (shouldBuild(ABILITY_ID::BUILD_REFINERY)) build(ABILITY_ID::BUILD_REFINERY, findAvailableGeyser());
 	else if (shouldBuild(ABILITY_ID::BUILD_BARRACKS)) build(ABILITY_ID::BUILD_BARRACKS);
+	else if (shouldBuild(ABILITY_ID::BUILD_FACTORY)) build(ABILITY_ID::BUILD_FACTORY);
+	else if (shouldBuild(ABILITY_ID::BUILD_STARPORT)) build(ABILITY_ID::BUILD_STARPORT);
 	else if (shouldBuild(ABILITY_ID::BUILD_COMMANDCENTER)) build(ABILITY_ID::BUILD_COMMANDCENTER);
 };
 
@@ -35,14 +37,20 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 			&& observations->helper->HasResourcesToBuild(UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
 	case ABILITY_ID::BUILD_REFINERY:
 		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_REFINERY)
-			&& h->CountSelfOrdersType(ABILITY_ID::BUILD_REFINERY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / 9
-			&& h->GetSelfUnits(AGENT_TYPE::TERRAN_SCV).size() > 15
+			&& h->CountSelfOrdersType(ABILITY_ID::BUILD_REFINERY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / 11
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 15
 			&& findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
 		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_BARRACKS)
-			&& h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_BARRACKS).size() + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 9
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_BARRACKS) + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 9
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 16
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_SUPPLYDEPOT) > 0;
+	case ABILITY_ID::BUILD_FACTORY:
+		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_FACTORY)
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_FACTORY) + h->CountSelfOrdersType(ABILITY_ID::BUILD_FACTORY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_BARRACKS) / 3;
+	case ABILITY_ID::BUILD_STARPORT:
+		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_STARPORT)
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_STARPORT) + h->CountSelfOrdersType(ABILITY_ID::BUILD_STARPORT) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_FACTORY);
 	case ABILITY_ID::BUILD_COMMANDCENTER:
 		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_COMMANDCENTER)
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / (h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_TOWN_HALL) + h->CountSelfOrdersType(ABILITY_ID::BUILD_COMMANDCENTER)) >= 16;
