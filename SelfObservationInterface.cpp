@@ -7,10 +7,12 @@ SelfObservationInterface::SelfObservationInterface(const Unit* self, const Obser
 	this->self = self;
 	this->observations = observations;
 	this->strategy = strategy;
+	this->helper = new Helper(observations, self);
 }
 
 SelfObservationInterface::~SelfObservationInterface()
 {
+	delete this->helper;
 }
 
 uint32_t SelfObservationInterface::GetPlayerID() const {

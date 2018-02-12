@@ -51,6 +51,9 @@
     <ClCompile Include="MilitaryAgent.cpp">
       <Filter>Fichiers sources\Agents</Filter>
     </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SelfActionInterface.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="MilitaryAgent.h">
       <Filter>Fichiers d%27en-tête\Agents</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClInclude Include="util.h">
+      <Filter>Fichiers d%27en-tête\Agents</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -131,6 +131,7 @@
     <ClCompile Include="SelfObservationInterface.cpp" />
     <ClCompile Include="SupplydepotAgent.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agents.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="SelfObservationInterface.h" />
     <ClInclude Include="SupplydepotAgent.h" />
     <ClInclude Include="UnitAgent.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

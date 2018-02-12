@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sc2api\sc2_interfaces.h>
+#include "util.h"
 #include "BotStrategy.h"
 
 using namespace sc2;
@@ -50,6 +51,7 @@ public:
 	float SelfObservationInterface::TerrainHeight(const Point2D &point) const;
 
 	BotStrategy* strategy;
+	Helper* helper;
 private:
 	const Unit* self;
 	const ObservationInterface* observations;

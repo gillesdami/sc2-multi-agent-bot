@@ -5,6 +5,7 @@ UnitAgent::UnitAgent(const Unit* self, SelfActionInterface* actions, SelfObserva
 	this->self = self;
 	this->actions = actions;
 	this->observations = observations;
+	this->h = observations->helper;
 }
 
 UnitAgent::~UnitAgent()
