@@ -14,9 +14,9 @@ public:
 
 	uint32_t GetPlayerID() const;
 	uint32_t SelfObservationInterface::GetGameLoop() const;
-	Units SelfObservationInterface::GetUnits() const;
-	Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter = {}) const;
-	Units SelfObservationInterface::GetUnits(Filter filter) const;
+	Units SelfObservationInterface::GetUnits();
+	Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter = {});
+	Units SelfObservationInterface::GetUnits(Filter filter);
 	const Unit * SelfObservationInterface::GetUnit(Tag tag) const;
 	const RawActions & SelfObservationInterface::GetRawActions() const;
 	const SpatialActions & SelfObservationInterface::GetFeatureLayerActions() const;
@@ -55,5 +55,10 @@ public:
 private:
 	const Unit* self;
 	const ObservationInterface* observations;
+	bool isCivil;
+	float selfSightRange;
+
+	Units FilterOutOfRangeUnits(Units units);
+	bool IsInSight(Point2D point);
 };
 

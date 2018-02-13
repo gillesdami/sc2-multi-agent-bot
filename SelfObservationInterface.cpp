@@ -7,6 +7,10 @@ SelfObservationInterface::SelfObservationInterface(const Unit* self, const Obser
 	this->self = self;
 	this->observations = observations;
 	this->strategy = strategy;
+
+	this->isCivil = (IsAgent(AGENT_TYPE::TERRAN_ANY_CIVIL, observations)(*self) || IsAgent(AGENT_TYPE::TERRAN_ANY_BUILDING, observations)(*self));
+	this->selfSightRange = observations->GetUnitTypeData().at(((UnitTypeID)self->unit_type)).sight_range;
+	
 	this->helper = new Helper(observations, self);
 }
 
@@ -23,16 +27,16 @@ uint32_t SelfObservationInterface::GetGameLoop() const {
 	return this->observations->GetGameLoop();
 }
 
-Units SelfObservationInterface::GetUnits() const {
-	return this->observations->GetUnits();
+Units SelfObservationInterface::GetUnits() {
+	return this->FilterOutOfRangeUnits(this->observations->GetUnits());
 }
 
-Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter) const {
-	return this->observations->GetUnits(alliance, filter);
+Units SelfObservationInterface::GetUnits(Unit::Alliance alliance, Filter filter) {
+	return this->FilterOutOfRangeUnits(this->observations->GetUnits(alliance, filter));
 }
 
-Units SelfObservationInterface::GetUnits(Filter filter) const {
-	return this->observations->GetUnits(filter);
+Units SelfObservationInterface::GetUnits(Filter filter) {
+	return this->FilterOutOfRangeUnits(this->observations->GetUnits(filter));
 }
 
 const Unit * SelfObservationInterface::GetUnit(Tag tag) const {
@@ -161,5 +165,25 @@ bool SelfObservationInterface::IsPlacable(const Point2D &point) const {
 
 float SelfObservationInterface::TerrainHeight(const Point2D &point) const {
 	return this->observations->TerrainHeight(point);
+}
+
+Units SelfObservationInterface::FilterOutOfRangeUnits(Units units)
+{
+	for (auto it = units.begin(); it != units.end();)
+	{
+		auto & unit = *it;
+
+		if ((unit->alliance == Unit::Alliance::Self && isCivil) || IsInSight(unit->pos))
+			++it;
+		else
+			it = units.erase(it);
+	}
+
+	return units;
+}
+
+bool SelfObservationInterface::IsInSight(Point2D point)
+{
+	return selfSightRange < Distance2D(self->pos, point);
 }
 
