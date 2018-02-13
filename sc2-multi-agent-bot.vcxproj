@@ -124,6 +124,7 @@
     <ClCompile Include="BarrackAgent.cpp" />
     <ClCompile Include="Bot.cpp" />
     <ClCompile Include="CommandCenterAgent.cpp" />
+    <ClCompile Include="FactoryAgent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MilitaryAgent.cpp" />
     <ClCompile Include="ScvAgent.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Bot.h" />
     <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="CommandCenterAgent.h" />
+    <ClInclude Include="FactoryAgent.h" />
     <ClInclude Include="MilitaryAgent.h" />
     <ClInclude Include="ScvAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
