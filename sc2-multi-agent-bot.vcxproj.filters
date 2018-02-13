@@ -27,6 +27,9 @@
     <ClCompile Include="FactoryAgent.cpp">
       <Filter>Agents</Filter>
     </ClCompile>
+    <ClCompile Include="StarportAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bot.h" />
@@ -56,6 +59,9 @@
       <Filter>Agents</Filter>
     </ClInclude>
     <ClInclude Include="FactoryAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="StarportAgent.h">
       <Filter>Agents</Filter>
     </ClInclude>
   </ItemGroup>

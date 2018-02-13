@@ -37,7 +37,7 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 			&& observations->helper->HasResourcesToBuild(UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
 	case ABILITY_ID::BUILD_REFINERY:
 		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_REFINERY)
-			&& h->CountSelfOrdersType(ABILITY_ID::BUILD_REFINERY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / 11
+			&& h->CountSelfOrdersType(ABILITY_ID::BUILD_REFINERY) + h->CountSelfAgentType(AGENT_TYPE::TERRAN_REFINERY) < h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) / 11
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 15
 			&& findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
