@@ -6,4 +6,5 @@
 #include "BarrackAgent.h"
 #include "FactoryAgent.h"
 #include "StarportAgent.h"
-#include "MilitaryAgent.h"
+#include "MarineAgent.h"
+#include "WidowmineAgent.h"

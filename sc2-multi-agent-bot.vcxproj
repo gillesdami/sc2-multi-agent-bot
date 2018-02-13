@@ -126,6 +126,7 @@
     <ClCompile Include="CommandCenterAgent.cpp" />
     <ClCompile Include="FactoryAgent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MarineAgent.cpp" />
     <ClCompile Include="MilitaryAgent.cpp" />
     <ClCompile Include="ScvAgent.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="SupplydepotAgent.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="WidowmineAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agents.h" />
@@ -142,6 +144,7 @@
     <ClInclude Include="BotStrategy.h" />
     <ClInclude Include="CommandCenterAgent.h" />
     <ClInclude Include="FactoryAgent.h" />
+    <ClInclude Include="MarineAgent.h" />
     <ClInclude Include="MilitaryAgent.h" />
     <ClInclude Include="ScvAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
@@ -150,6 +153,7 @@
     <ClInclude Include="SupplydepotAgent.h" />
     <ClInclude Include="UnitAgent.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="WidowmineAgent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

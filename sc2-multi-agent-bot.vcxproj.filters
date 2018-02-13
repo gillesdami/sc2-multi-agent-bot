@@ -30,6 +30,12 @@
     <ClCompile Include="StarportAgent.cpp">
       <Filter>Agents</Filter>
     </ClCompile>
+    <ClCompile Include="WidowmineAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="MarineAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bot.h" />
@@ -62,6 +68,12 @@
       <Filter>Agents</Filter>
     </ClInclude>
     <ClInclude Include="StarportAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="WidowmineAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="MarineAgent.h">
       <Filter>Agents</Filter>
     </ClInclude>
   </ItemGroup>
