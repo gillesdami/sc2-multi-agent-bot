@@ -7,7 +7,7 @@ StarportAgent::StarportAgent(const Unit * self, SelfActionInterface * actions, S
 
 void StarportAgent::OnStep()
 {
-	if (self->orders.empty()) {
+	if (self->orders.empty() && !h->isSupplyBlock()) {
 		if (h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_VIKINGFIGHTER)) train(ABILITY_ID::TRAIN_VIKINGFIGHTER);
 	}
 }

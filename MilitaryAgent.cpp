@@ -3,6 +3,7 @@
 MilitaryAgent::MilitaryAgent(const Unit* self, SelfActionInterface* actions, SelfObservationInterface* observations,QueryInterface* query) : UnitAgent(self, actions, observations)
 {
 	this->query = query;
+	this->isAttaking = false;
 }
 
 MilitaryAgent::~MilitaryAgent()
@@ -13,6 +14,7 @@ void MilitaryAgent::OnStep() {
 	Units threats = h->GetUnits(Unit::Alliance::Enemy, AGENT_TYPE::ALL_MILITARY);
 	Units civil = h->GetUnits(Unit::Alliance::Enemy, AGENT_TYPE::ALL_CIVIL);
 	Units building = h->GetUnits(Unit::Alliance::Enemy, AGENT_TYPE::ALL_BUILDING);
+	Units militaryAlly = h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_MILITARY);
 
 	//atk ennemies in sight
 	if (threats.size()) {
@@ -24,21 +26,14 @@ void MilitaryAgent::OnStep() {
 	else if (building.size()) {
 		actions->Command(ABILITY_ID::ATTACK, h->GetClosest(building));
 	}
-	//go to the closest objective
-	else if (observations->strategy->objectives.size()) {
-		Point2D closest;
-		float distance = std::numeric_limits<float>::max();
+	//go atk opponent
+	else if (militaryAlly.size() >= 15 || isAttaking) {
+		actions->Command(ABILITY_ID::ATTACK, observations->GetGameInfo().enemy_start_locations.at(0));
+		isAttaking = true;
 
-		for (auto pair : observations->strategy->objectives) {
-
-			float d = DistanceSquared2D(pair.second, self->pos);
-			if (d < distance) {
-				distance = d;
-				closest = pair.second;
-			}
+		if (militaryAlly.size() <= 5) {
+			isAttaking = false;
 		}
-
-		actions->Command(ABILITY_ID::SMART, closest);
 	}
 	//go to the closest commandCenter
 	else {

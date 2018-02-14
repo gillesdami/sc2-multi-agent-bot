@@ -6,8 +6,6 @@
 
 class MarineAgent : public MilitaryAgent
 {
-private:
-	bool isIdle;
 public:
 	void OnStep();
 	void OnUnitIdle();

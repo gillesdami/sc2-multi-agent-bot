@@ -81,6 +81,11 @@ const Unit * sc2::Helper::GetClosest(Units units)
 	return closest;
 }
 
+bool sc2::Helper::isSupplyBlock()
+{
+	return this->observations->GetFoodCap() <= this->observations->GetFoodUsed();
+}
+
 Units sc2::Helper::FilterOutOfRangeUnits(Units units)
 {
 	for (auto it = units.begin(); it != units.end();)

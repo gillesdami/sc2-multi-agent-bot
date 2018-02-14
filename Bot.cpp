@@ -10,9 +10,14 @@ void Bot::OnGameStart()
 void Bot::OnStep() 
 {
 	this->strategy->publicOrdersThisStep.clear();
+	uint32_t i = 0;
 
 	for (auto it = this->agents.begin(); it != this->agents.end(); ++it) {
-		it->second.get()->OnStep();
+		if ((Observation()->GetGameLoop() + i) % 10 == 0) {
+			it->second.get()->OnStep();
+		}
+
+		i++;
 	}
 }
 

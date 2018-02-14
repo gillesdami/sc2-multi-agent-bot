@@ -12,7 +12,7 @@ BarrackAgent::~BarrackAgent()
 
 void BarrackAgent::OnStep() 
 {
-	if (self->orders.size() == 0) {
+	if (self->orders.size() == 0 && !h->isSupplyBlock()) {
 		trainAgent();
 	}
 }

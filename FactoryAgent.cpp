@@ -7,7 +7,7 @@ FactoryAgent::FactoryAgent(const Unit * self, SelfActionInterface * actions, Sel
 
 void FactoryAgent::OnStep()
 {
-	if (!self->orders.size()) {
+	if (!self->orders.size() && !h->isSupplyBlock()) {
 		if (h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_WIDOWMINE)) train(ABILITY_ID::TRAIN_WIDOWMINE);
 	}
 }

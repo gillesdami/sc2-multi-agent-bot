@@ -491,6 +491,7 @@ namespace sc2 {
 		const Unit* GetClosest(Units units);
 
 		bool sc2::Helper::IsInSight(Point2D point);
+		bool isSupplyBlock();
 	private:
 		const ObservationInterface* observations;
 		const Unit* self;

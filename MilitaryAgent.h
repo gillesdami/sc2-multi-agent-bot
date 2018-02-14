@@ -8,6 +8,7 @@ class MilitaryAgent : public UnitAgent
 {
 private:
 	QueryInterface* query;
+	bool isAttaking;
 public:
 	virtual void OnStep();
 	virtual void OnUnitIdle();
