@@ -68,7 +68,6 @@ const Unit * sc2::Helper::GetClosest(Units units)
 {
 	const Unit* closest = nullptr;
 	float distance = std::numeric_limits<float>::max();
-	const Unit* mineral_target = nullptr;
 
 	for (const auto& unit : units) {
 
@@ -88,7 +87,9 @@ Units sc2::Helper::FilterOutOfRangeUnits(Units units)
 	{
 		auto & unit = *it;
 
-		if (((unit->alliance == Unit::Alliance::Self || unit->alliance == Unit::Alliance::Neutral) && isCivil) || IsInSight(unit->pos))
+		if (((unit->alliance == Unit::Alliance::Self || unit->alliance == Unit::Alliance::Neutral) && isCivil)
+			|| IsInSight(unit->pos)
+			|| IsAgent(AGENT_TYPE::TERRAN_ANY_TOWN_HALL)(*unit))
 			++it;
 		else
 			it = units.erase(it);

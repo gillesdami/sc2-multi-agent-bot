@@ -6,6 +6,7 @@ ReaperAgent::ReaperAgent(const Unit * self, SelfActionInterface * actions, SelfO
 
 void ReaperAgent::OnStep()
 {
+	MilitaryAgent::OnStep();
 }
 
 ReaperAgent::~ReaperAgent()

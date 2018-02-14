@@ -39,7 +39,9 @@
     <ClCompile Include="VikingAgent.cpp">
       <Filter>Agents</Filter>
     </ClCompile>
-    <ClCompile Include="ReaperAgent.cpp" />
+    <ClCompile Include="ReaperAgent.cpp">
+      <Filter>Agents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bot.h" />
@@ -83,7 +85,9 @@
     <ClInclude Include="VikingAgent.h">
       <Filter>Agents</Filter>
     </ClInclude>
-    <ClInclude Include="ReaperAgent.h" />
+    <ClInclude Include="ReaperAgent.h">
+      <Filter>Agents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Agents">

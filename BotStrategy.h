@@ -10,8 +10,7 @@ struct BotStrategy {
 
 	std::vector<ABILITY_ID> publicOrdersThisStep;
 
-	std::vector<Point2D> militarySupportRequested;
-	std::vector<Point2D> militaryObjectives;
+	std::map<Tag, Point2D> objectives;
 
 	std::vector<Point3D> expansionLocations;
 };

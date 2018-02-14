@@ -14,6 +14,9 @@ void WidowmineAgent::OnStep()
 	else if (self->is_burrowed && h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_MILITARY) + h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_CIVIL) == 0) {
 		actions->Command(ABILITY_ID::BURROWUP_WIDOWMINE);
 	}
+	else if (!self->is_burrowed) {
+		MilitaryAgent::OnStep();
+	}
 }
 
 void WidowmineAgent::OnUnitIdle()

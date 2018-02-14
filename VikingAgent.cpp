@@ -14,6 +14,9 @@ void VikingAgent::OnStep()
 	else if (self->is_flying && h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_FLYING) == 0) {
 		actions->Command(ABILITY_ID::MORPH_VIKINGASSAULTMODE);
 	}
+	else {
+		MilitaryAgent::OnStep();
+	}
 }
 
 void VikingAgent::OnUnitIdle()
