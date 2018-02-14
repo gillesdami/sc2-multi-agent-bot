@@ -45,7 +45,6 @@ void MarineAgent::move() {
 
 void MarineAgent::RetreatWithUnit(const Unit* unit, Point2D retreat_position) {
 	float dist = Distance2D(unit->pos, retreat_position);
-	std::cout << "Distance : " << dist << std::endl;
 	if (dist < 1) {
 		if (unit->orders.empty()) {
 			return;

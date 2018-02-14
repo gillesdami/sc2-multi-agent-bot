@@ -488,6 +488,8 @@ namespace sc2 {
 		Units GetUnits(Unit::Alliance alliance, AGENT_TYPE agentType);
 		Units GetSelfUnits(AGENT_TYPE agentType);
 
+		const Unit* GetClosest(Units units);
+
 		bool sc2::Helper::IsInSight(Point2D point);
 	private:
 		const ObservationInterface* observations;

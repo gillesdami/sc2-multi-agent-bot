@@ -64,6 +64,24 @@ Units sc2::Helper::GetSelfUnits(AGENT_TYPE agentType) {
 	return GetUnits(Unit::Alliance::Self, agentType);
 }
 
+const Unit * sc2::Helper::GetClosest(Units units)
+{
+	const Unit* closest = nullptr;
+	float distance = std::numeric_limits<float>::max();
+	const Unit* mineral_target = nullptr;
+
+	for (const auto& unit : units) {
+
+		float d = DistanceSquared2D(unit->pos, self->pos);
+		if (d < distance) {
+			distance = d;
+			closest = unit;
+		}
+	}
+
+	return closest;
+}
+
 Units sc2::Helper::FilterOutOfRangeUnits(Units units)
 {
 	for (auto it = units.begin(); it != units.end();)

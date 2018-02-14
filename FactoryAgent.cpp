@@ -2,6 +2,7 @@
 
 FactoryAgent::FactoryAgent(const Unit * self, SelfActionInterface * actions, SelfObservationInterface * observations) : UnitAgent(self, actions, observations)
 {
+	actions->Command(ABILITY_ID::SMART, h->GetClosest(h->GetSelfUnits(AGENT_TYPE::TERRAN_COMMANDCENTER))->pos);
 }
 
 void FactoryAgent::OnStep()
