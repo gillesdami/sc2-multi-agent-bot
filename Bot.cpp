@@ -38,7 +38,6 @@ void Bot::OnUnitCreated(const Unit* unit)
 			this->Query())));
 		break;
 	case UNIT_TYPEID::TERRAN_SUPPLYDEPOT:
-	case UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED:
 		this->agents.insert(std::make_pair(unit, std::make_unique<SupplydepotAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
@@ -49,29 +48,54 @@ void Bot::OnUnitCreated(const Unit* unit)
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+		break;
 	case UNIT_TYPEID::TERRAN_FACTORY:
 		this->agents.insert(std::make_pair(unit, std::make_unique<FactoryAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+		break;
 	case UNIT_TYPEID::TERRAN_STARPORT:
 		this->agents.insert(std::make_pair(unit, std::make_unique<StarportAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy))));
+		break;
 	case UNIT_TYPEID::TERRAN_MARINE:
 		this->agents.insert(std::make_pair(unit, std::make_unique<MarineAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy),
 			this->Query())));
+		break;
+	case UNIT_TYPEID::TERRAN_REAPER:
+		this->agents.insert(std::make_pair(unit, std::make_unique<ReaperAgent>(
+			unit,
+			new SelfActionInterface(unit, this->Actions()),
+			new SelfObservationInterface(unit, this->Observation(), this->strategy),
+			this->Query())));
+		break;
 	case UNIT_TYPEID::TERRAN_WIDOWMINE:
 		this->agents.insert(std::make_pair(unit, std::make_unique<WidowmineAgent>(
 			unit,
 			new SelfActionInterface(unit, this->Actions()),
 			new SelfObservationInterface(unit, this->Observation(), this->strategy),
 			this->Query())));
-
+		break;
+	case UNIT_TYPEID::TERRAN_VIKINGFIGHTER:
+		this->agents.insert(std::make_pair(unit, std::make_unique<VikingAgent>(
+			unit,
+			new SelfActionInterface(unit, this->Actions()),
+			new SelfObservationInterface(unit, this->Observation(), this->strategy),
+			this->Query())));
+		break;
+	case UNIT_TYPEID::TERRAN_REFINERY:
+		this->agents.insert(std::make_pair(unit, std::make_unique<UnitAgent>(
+			unit,
+			new SelfActionInterface(unit, this->Actions()),
+			new SelfObservationInterface(unit, this->Observation(), this->strategy)
+			)));
+		break;
 	default:
 		std::cout << "WARNING: Default agent instanciated (" << unit->unit_type.to_string() << ")" << std::endl;
 

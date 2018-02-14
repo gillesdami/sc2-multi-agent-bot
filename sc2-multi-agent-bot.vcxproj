@@ -128,6 +128,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MarineAgent.cpp" />
     <ClCompile Include="MilitaryAgent.cpp" />
+    <ClCompile Include="ReaperAgent.cpp" />
     <ClCompile Include="ScvAgent.cpp" />
     <ClCompile Include="SelfActionInterface.cpp" />
     <ClCompile Include="SelfObservationInterface.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="SupplydepotAgent.cpp" />
     <ClCompile Include="UnitAgent.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="VikingAgent.cpp" />
     <ClCompile Include="WidowmineAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +148,7 @@
     <ClInclude Include="FactoryAgent.h" />
     <ClInclude Include="MarineAgent.h" />
     <ClInclude Include="MilitaryAgent.h" />
+    <ClInclude Include="ReaperAgent.h" />
     <ClInclude Include="ScvAgent.h" />
     <ClInclude Include="SelfActionInterface.h" />
     <ClInclude Include="SelfObservationInterface.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="SupplydepotAgent.h" />
     <ClInclude Include="UnitAgent.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="VikingAgent.h" />
     <ClInclude Include="WidowmineAgent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,3 +8,5 @@
 #include "StarportAgent.h"
 #include "MarineAgent.h"
 #include "WidowmineAgent.h"
+#include "VikingAgent.h"
+#include "ReaperAgent.h"
