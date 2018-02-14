@@ -5,7 +5,7 @@ sc2::IsAgent sc2::Helper::IsAgent(AGENT_TYPE agentType) {
 }
 
 int sc2::Helper::CountAgentType(Unit::Alliance alliance, AGENT_TYPE agentType) {
-	return observations->GetUnits(alliance, IsAgent(agentType)).size();
+	return this->FilterOutOfRangeUnits(observations->GetUnits(alliance, IsAgent(agentType))).size();
 }
 
 int sc2::Helper::CountSelfAgentType(AGENT_TYPE agentType) {
@@ -43,6 +43,12 @@ int sc2::Helper::CountOrdersType(ABILITY_ID abilityId, Unit::Alliance alliance)
 		}
 	}
 
+	if (Unit::Alliance::Self == alliance) {
+		for (auto ability : this->strategy->publicOrdersThisStep) {
+			if (ability == abilityId) count++;
+		}
+	}
+
 	return count;
 }
 
@@ -51,9 +57,29 @@ int sc2::Helper::CountSelfOrdersType(ABILITY_ID abilityId) {
 }
 
 Units sc2::Helper::GetUnits(Unit::Alliance alliance, AGENT_TYPE agentType) {
-	return this->observations->GetUnits(alliance, IsAgent(agentType));
+	return this->FilterOutOfRangeUnits(this->observations->GetUnits(alliance, IsAgent(agentType)));
 }
 
 Units sc2::Helper::GetSelfUnits(AGENT_TYPE agentType) {
 	return GetUnits(Unit::Alliance::Self, agentType);
+}
+
+Units sc2::Helper::FilterOutOfRangeUnits(Units units)
+{
+	for (auto it = units.begin(); it != units.end();)
+	{
+		auto & unit = *it;
+
+		if (((unit->alliance == Unit::Alliance::Self || unit->alliance == Unit::Alliance::Neutral) && isCivil) || IsInSight(unit->pos))
+			++it;
+		else
+			it = units.erase(it);
+	}
+
+	return units;
+}
+
+bool sc2::Helper::IsInSight(Point2D point)
+{
+	return selfSightRange > Distance2D(self->pos, point);
 }

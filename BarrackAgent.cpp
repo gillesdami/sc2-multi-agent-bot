@@ -11,15 +11,13 @@ BarrackAgent::~BarrackAgent()
 
 void BarrackAgent::OnStep() 
 {
-	if (isIdle) {
-		isIdle = false;
+	if (self->orders.size() == 0) {
 		trainAgent();
 	}
 }
 
 void BarrackAgent::OnUnitIdle()
 {
-	isIdle = true;
 }
 
 void BarrackAgent::trainAgent() {

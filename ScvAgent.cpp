@@ -42,7 +42,7 @@ bool ScvAgent::shouldBuild(ABILITY_ID abilityId)
 			&& findAvailableGeyser() != NULL;
 	case ABILITY_ID::BUILD_BARRACKS:
 		return h->HasResourcesToBuild(UNIT_TYPEID::TERRAN_BARRACKS)
-			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_BARRACKS) + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 11
+			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_BARRACKS) + h->CountSelfOrdersType(ABILITY_ID::BUILD_BARRACKS) < observations->GetFoodWorkers() / 7
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_SCV) > 16
 			&& h->CountSelfAgentType(AGENT_TYPE::TERRAN_ANY_SUPPLYDEPOT) > 0;
 	case ABILITY_ID::BUILD_FACTORY:

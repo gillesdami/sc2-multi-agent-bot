@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sc2api/sc2_api.h"
+#include "BotStrategy.h"
 
 using namespace sc2;
 
@@ -237,9 +238,11 @@ namespace sc2 {
 			//NEW FILTERS
 			//multi race 10xx
 			ALL_FLYING = 1000,
+			ALL_CIVIL = 1001,
+			ALL_MILITARY = 1002,
 			ALL_TOWN_HALL = 1010,
 
-				ALL_BUILDING = 1020,
+			ALL_BUILDING = 1020,
 			//neutral 11xx
 			NEUTRAL_ANY_VESPENE = 1100,
 
@@ -314,6 +317,14 @@ namespace sc2 {
 					}
 				};
 				return false;
+			case AGENT_TYPE::ALL_MILITARY:
+				return IsAgent(AGENT_TYPE::PROTOSS_ANY_MILITARY, obs_)(unit)
+					|| IsAgent(AGENT_TYPE::TERRAN_ANY_MILITARY, obs_)(unit)
+					|| IsAgent(AGENT_TYPE::ZERG_ANY_MILITARY, obs_)(unit);
+			case AGENT_TYPE::ALL_CIVIL:
+				return IsAgent(AGENT_TYPE::PROTOSS_ANY_CIVIL, obs_)(unit)
+					|| IsAgent(AGENT_TYPE::TERRAN_ANY_CIVIL, obs_)(unit)
+					|| IsAgent(AGENT_TYPE::ZERG_ANY_CIVIL, obs_)(unit);
 			case AGENT_TYPE::NEUTRAL_ANY_VESPENE:
 				return unit.unit_type == UNIT_TYPEID::NEUTRAL_VESPENEGEYSER
 					|| unit.unit_type == UNIT_TYPEID::NEUTRAL_SPACEPLATFORMGEYSER
@@ -455,7 +466,10 @@ namespace sc2 {
 
 	class Helper {
 	public:
-		Helper(const ObservationInterface* observations, const Unit* self) : observations(observations), self(self) {};
+		Helper(const ObservationInterface* observations, const Unit* self, BotStrategy* strategy) : observations(observations), self(self), strategy(strategy) {
+			this->isCivil = (IsAgent(AGENT_TYPE::TERRAN_ANY_CIVIL)(*self) || IsAgent(AGENT_TYPE::TERRAN_ANY_BUILDING)(*self));
+			this->selfSightRange = observations->GetUnitTypeData().at(((UnitTypeID)self->unit_type)).sight_range;
+		};
 
 		IsAgent IsAgent(AGENT_TYPE agentType);
 
@@ -473,8 +487,15 @@ namespace sc2 {
 
 		Units GetUnits(Unit::Alliance alliance, AGENT_TYPE agentType);
 		Units GetSelfUnits(AGENT_TYPE agentType);
+
+		bool sc2::Helper::IsInSight(Point2D point);
 	private:
 		const ObservationInterface* observations;
 		const Unit* self;
+		bool isCivil;
+		float selfSightRange;
+		BotStrategy* strategy;
+
+		Units sc2::Helper::FilterOutOfRangeUnits(Units units);
 	};
 }

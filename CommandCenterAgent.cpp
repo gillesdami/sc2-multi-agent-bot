@@ -7,10 +7,15 @@ CommandCenterAgent::CommandCenterAgent(const Unit * self, SelfActionInterface * 
 
 void CommandCenterAgent::OnStep()
 {
+	bool requireScvToMine = false;
+	Units commandCenters = h->GetSelfUnits(AGENT_TYPE::TERRAN_ANY_TOWN_HALL);
+	for (const auto& unit : commandCenters) {
+		if (this->self->ideal_harvesters - this->self->assigned_harvesters > 0) requireScvToMine = true;
+	}
+
 	if (this->self->orders.empty()
 		&& this->observations->GetMinerals() > 50
-		&& (this->self->ideal_harvesters - this->self->assigned_harvesters > 0
-			|| this->refineryRequireWorkers())) {
+		&& (requireScvToMine || this->refineryRequireWorkers())) {
 
 		this->actions->Command(ABILITY_ID::TRAIN_SCV);
 	}

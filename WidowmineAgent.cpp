@@ -8,6 +8,12 @@ WidowmineAgent::WidowmineAgent(const Unit* self, SelfActionInterface* actions, S
 
 void WidowmineAgent::OnStep()
 {
+	if (!self->is_burrowed && h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_MILITARY) + h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_CIVIL) > 0) {
+		actions->Command(ABILITY_ID::BURROWDOWN_WIDOWMINE);
+	}
+	else if (self->is_burrowed && h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_MILITARY) + h->CountAgentType(Unit::Alliance::Enemy, AGENT_TYPE::ALL_CIVIL) == 0) {
+		actions->Command(ABILITY_ID::BURROWUP_WIDOWMINE);
+	}
 }
 
 void WidowmineAgent::OnUnitIdle()
