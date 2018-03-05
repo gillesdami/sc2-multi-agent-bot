@@ -6,7 +6,7 @@ Each agent is programmed to react with very simple rules.
 
 # Build and run
 
-- Download and build [s2client-api](https://github.com/Blizzard/s2client-api)
+- Download and build s2client-api: https://github.com/Blizzard/s2client-api
 - Download this repository
 - Run VisualStudio2017
 - Link dependancies (change the abs paths according to your s2client-api directory)
@@ -17,7 +17,7 @@ Each agent is programmed to react with very simple rules.
 Here is a demo showing the bot painfully win against an medium bot.
 Our bot could easily be improved to win against better oponents.
 
-[youtube](https://www.youtube.com/watch?v=bIBEQA5I6Is)
+youtube: https://www.youtube.com/watch?v=bIBEQA5I6Is
 
 # Authors
 
